@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1475164894 source:e:\操作系统\1\main.c
+	<unistd.h>
+	<stdio.h>
+
+1385316878 source:e:\操作系统\1\main.cpp
+	<iostream>
+
