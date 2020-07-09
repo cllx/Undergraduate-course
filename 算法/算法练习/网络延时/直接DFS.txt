@@ -1,0 +1,86 @@
+#include <iostream>  
+#include <algorithm>  
+using namespace std;  
+const int SIZE = 20001;  
+const int ADJ_NUM = 1550;  
+enum kind{  
+    sw, // 交换机   
+    pc // 电脑   
+};  
+struct _node{  
+    int mark_num; // 标号  
+    int flag;   
+    int adj[ADJ_NUM];  
+    int adj_num;  
+};  
+int n_answer[SIZE] = {0};  
+_node graph[SIZE] = {0};  
+int visited[SIZE] = {0}; // 标记是否已经访问过了   
+int top = 0;  
+// 这道题目其实很简单，只需要深度搜索即可,查找出深度   
+int dfs_visit(int);  
+void dfs()  
+{  
+    dfs_visit(1);  
+    sort(n_answer, n_answer + top); // 对答案也要进行排序  
+    cout << n_answer[top - 1] << endl;  
+}  
+int dfs_visit(int i) // 这里只需要查询深度即可   
+{  
+    // 从根节点开始往下搜索  
+    int index = 0;  
+    int height[ADJ_NUM] = {0};  
+    while (true)  
+    {  
+        int adj = graph[i].adj[index];  
+        if (adj == 0) break; // 没有了邻接点，所以退出   
+        else  
+        height[index] = dfs_visit(adj); // 访问下层节点   
+        index++;  
+    }   
+    if (index == 0)  
+    {  
+        n_answer[top++] = 0; // 该节点深度最深的两棵子树的深度之和为0；  
+        return 1;  
+    }  
+          
+    if (index == 1)  
+    {  
+        n_answer[top++] = 1; //  该节点深度最深的两棵子树的深度之和为1；  
+        return 1 + height[0];  
+    }  
+    else  
+    {  
+        sort(height, height + index); // 首先要排序，因为各子树的高度是不一致的  
+        n_answer[top++] = height[index - 1] + height[index - 2]; //  该节点深度最深的两棵子树的深度之和  
+        return 1 + height[index - 1]; // 返回这棵子树的深度  
+    }  
+}  
+int main()  
+{  
+    int n, m;  
+    cin >> n >> m;  
+    int f_n; // 父节点   
+    graph[1].mark_num = 1;  
+    graph[1].flag = sw;  
+    int top = 2;  
+    for (int i = 2; i <= n; ++i)  
+    {  
+        cin >> f_n;  
+        graph[f_n].adj[graph[f_n].adj_num++] = top; // top指向当前节点   
+        graph[top].mark_num = i; // 标记   
+        graph[top].flag = sw; // 类型为交换机   
+        top++;  
+    }  
+    for (int j = 1; j <= m; ++j)  
+    {  
+        cin >> f_n; // 输入父节点的值   
+        graph[f_n].adj[graph[f_n].adj_num++] = top; // top指向当前节点   
+        graph[top].mark_num = j;  
+        graph[top].flag = pc; // 这里其实可以省略  
+        top++;  
+    }  
+    dfs();  
+    system("pause");          
+    return 0;  
+} 

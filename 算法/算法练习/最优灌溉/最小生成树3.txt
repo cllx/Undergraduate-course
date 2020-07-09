@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+#define LL long long
+#define INF 0x3f3f3f3f3f3f3f
+#define pii pair<int,int>
+using namespace std;
+const int maxn = 2000;
+struct arc{
+    int to,cost,next;
+    arc(int x = 0,int y = 0,int z = -1){
+        to = x;
+        cost = y;
+        next = z;
+    }
+}e[500000];
+int tot,n,m,head[maxn];
+LL d[maxn];
+bool done[maxn];
+void add(int u,int v,int cost){
+    e[tot] = arc(v,cost,head[u]);
+    head[u] = tot++;
+    e[tot] = arc(u,cost,head[v]);
+    head[v] = tot++;
+}
+priority_queue< pii,vector< pii >,greater< pii > >q;
+LL prim(){
+    while(!q.empty()) q.pop();
+    for(int i = 1; i <= n; ++i){
+        done[i] = false;
+        d[i] = INF;
+    }
+    q.push(make_pair(d[1] = 0,1));
+    LL ans = 0;
+    while(!q.empty()){
+        int u = q.top().second;
+        q.pop();
+        if(done[u]) continue;
+        done[u] = true;
+        ans += d[u];
+        for(int i = head[u]; ~i; i = e[i].next){
+            if(!done[e[i].to] && e[i].cost < d[e[i].to]){
+                d[e[i].to] = e[i].cost;
+                q.push(make_pair(d[e[i].to],e[i].to));
+            }
+        }
+    }
+    return ans;
+}
+int main(){
+    int u,v,w;
+    while(~scanf("%d %d",&n,&m)){
+        memset(head,-1,sizeof(head));
+        for(int i = tot = 0; i < m; ++i){
+            scanf("%d %d %d",&u,&v,&w);
+            add(u,v,w);
+        }
+        printf("%I64d\n",prim());
+    }
+    return 0;
+}

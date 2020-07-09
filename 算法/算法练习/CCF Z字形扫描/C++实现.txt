@@ -1,0 +1,121 @@
+需要注意的是，如果下移不成功就要右移一格，如果右移不成功就要下移一格。
+rightMove() 和 downMove()代码不会出现死循环。原因：
+1 5 3 9
+3 7 5 6
+9 4 6 4
+7 3 1 3
+Z字形扫描到1(第四行第三列)的时候执行downMove()，此时由于下移不通所以要调用右移，然后调用右斜上移动以后就跳出Z()函数了。由于到达了3(第四行第四列)所以跳出了循环。如果这时候没有跳出循环而调用rightMove()，就会陷入死循环。
+
+
+
+
+#include<iostream>
+using namespace std;
+
+class Point{
+public:
+	int x;
+	int y;
+	Point(int x,int y){
+		this->x = x;
+		this->y = y;
+	}
+};
+
+int *a;
+int *b;
+int i = 0;
+int length;
+Point downMove(Point n);
+
+bool inThePanel(int x,int y){
+	return x>=0 && x<length && y>=0 && y<length;
+}
+
+//[y][x]
+Point rightMove(Point n){
+	if(inThePanel(n.x+1,n.y)){
+		b[i++] = a[n.y * length + n.x+1];
+		return Point(n.x+1,n.y);
+	}
+	else{
+		return downMove(n);
+	}
+//	return n;
+}
+
+Point lTitle(Point n){
+	int x = n.x;
+	int y = n.y;
+	while(inThePanel(x-1,y+1)){
+		b[i++] = a[(y+1) * length + x-1];
+		x--;
+		y++;
+	}
+	return Point(x,y);
+}
+
+Point downMove(Point n){
+	if(inThePanel(n.x,n.y+1)){
+		b[i++] = a[(n.y+1) * length + n.x];
+		return Point(n.x,n.y+1);
+	}
+	else{
+		return rightMove(n);
+	}
+//	return n;
+}
+
+Point rTitle(Point n){
+	int x = n.x;
+	int y = n.y;
+	while(inThePanel(x+1,y-1)){
+		b[i++] = a[(y-1) * length + x+1];
+		x++;
+		y--;
+	}
+	return Point(x,y);
+}
+
+Point Z(Point n){
+	return rTitle(downMove(lTitle(rightMove(n))));
+}
+void displayb(int s){
+	int index = -1;
+	for(;++index<s-1;){
+		cout<<b[index]<<" ";
+	}
+	cout<<b[index]<<endl;
+}
+
+void displaya(int s){
+	int index = -1;
+	for(;++index<s-1;){
+		cout<<a[index]<<" ";
+	}
+	cout<<a[index]<<endl;
+}
+
+int main(){
+	cin>>length;
+	int size = length * length,index;
+	a = new int[size];
+	b = new int[size];
+	Point start(0,0);
+	for(index=-1;++index<size;){
+		cin>>a[index];
+	}
+	b[i++] = a[0];
+	if(length>1){
+//	displaya(size);
+		do{
+			start = Z(start);
+		}while(start.x !=length -1 || start.y !=length-1);
+	}
+//	start = downMove(start);
+//	cout<<start.x<<" "<<start.y<<endl;
+	displayb(i);
+	delete[]a;
+	delete[]b;
+	return 0;
+}

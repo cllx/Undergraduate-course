@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>  
+using namespace std;  
+#define INF 0x3f3f3f3f    
+int lowcost[1010];  
+int e[1010][1010];  
+bool vis[1010];  
+int n,m,sum;  
+void prime()  
+{  
+    vis[1]=1;  
+    int tmp;  
+    int k;  
+    for(int i=1;i<=n;i++)  
+    lowcost[i]=e[1][i];  
+    for(int i=1;i<n;i++)  
+    {  
+        tmp=INF;  
+        for(int j=1;j<=n;j++)  
+        if(!vis[j]&&lowcost[j]<tmp)  
+        tmp=lowcost[k=j];  
+        sum+=tmp;  
+        vis[k]=1;  
+        for(int j=1;j<=n;j++)  
+        if(!vis[j]&&lowcost[j]>e[k][j])  
+        lowcost[j]=e[k][j];  
+          
+    }  
+      
+}  
+int main()  
+{  
+    int u,v,c;  
+    scanf("%d %d",&n,&m);  
+    memset(e,INF,sizeof(e));  
+    for(int i=0;i<m;i++)  
+    {  
+     scanf("%d %d %d",&u,&v,&c);  
+     e[u][v]=c;  
+     e[v][u]=c;  
+    }  
+    prime();  
+    printf("%d\n",sum);  
+}  

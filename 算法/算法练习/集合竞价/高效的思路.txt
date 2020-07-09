@@ -1,0 +1,67 @@
+//思路：
+
+关键是对p0的选取，这里p0一定是有效的买单或卖单里的p。
+理由：
+     若p0不是买单或卖单里的p，那么p0必然介于某两个出价p之间，设为 p1 和 p2，即 p1 < p0 < p2;
+     1.当买单和卖单里都有p2时，这时若以p0为单价，则必然会使卖单减少，由于成交量是取小的，所以成交量也会减小，就不如开盘价为p2是的好；
+     2.当只有买单有p2，和开盘价为p2时一样，所以开盘价不会是这个p0;
+     3.当只有卖单有p2，情况和 1 相同； 
+     4.当买单和卖单里都有p1时或只有买单有p1时，若以p0为单价，则会使买单减少，继而成交量减小，不如开盘价为p1；
+     5.当只有卖单有p1时，这时和开盘价为p1时是一样的，此时p0优于p1，但是p2则必然优于p0；由于买单是没有p1，所以此时对于p1,p0,p2买单的成交量都一样，而              卖单的成交量p1和p0相同，p2则大于等于p1和p0；
+
+
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+#include<set>
+using namespace std;
+typedef long long ll;
+#define MAX 5007
+typedef struct{
+    string m;
+    double p;
+    int s;
+    bool e;
+}R;
+R r[MAX];
+set<double> st;
+int main(){
+    /*
+    这里的每一条记录都需要记录，包括cancel i，
+    因为cancel i 是在包含cancel i这条记录的情况的的第i条记录     
+    */
+    int m=0;
+    while(cin>>r[m].m){    
+        if(r[m].m == "cancel"){
+            cin>>r[m].s;
+            r[r[m].s-1].e=true;
+            m++;
+            continue;
+        }
+        cin>>r[m].p>>r[m].s;
+        ++m;
+    }
+    for(int i=0;i<m;++i)
+        if(r[i].m != "cancel" && !r[i].e)st.insert(r[i].p);
+    
+    ll m_sum=0;
+    double p=0;
+    for(set<double>::iterator it=st.begin();it!=st.end();++it){
+        double p0 = *it;
+        ll sumb=0,sums=0,sum;
+        for(int i=0;i<m;++i)
+            if(r[i].m == "sell" && !r[i].e && r[i].p<=p0)sums+=r[i].s;
+        for(int i=0;i<m;++i)
+            if(r[i].m == "buy" && !r[i].e && r[i].p>=p0)sumb+=r[i].s;
+        sum=min(sums,sumb);
+        
+        if(sum>=m_sum){
+            m_sum=sum;
+            p=p0;
+        }
+    }
+    //注意保留到小数点后两位 
+    printf("%.2f ",p);
+    cout<<m_sum<<endl;    
+    return 0;
+}

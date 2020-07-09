@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <map>
+
+using namespace std;
+
+int main() {
+    string s;
+    cin>>s;
+    char buffer[260];
+    int n;
+    cin>>n;
+    cin.getline(buffer,260);     //读取无用字符到这行末
+    for(int i=1;i<=n;i++)
+    {
+        cin.getline(buffer,260);
+        string a(buffer);     //把char数组转换为string
+        vector<string> v;     //申明向量存放切割的string
+        map<string,string> map1;     //声明map存放命令和参数，first为命令，second为参数，注意不要和map重名，小心使用不了迭代器
+        for(int t = (int)a.find(" ");t != -1; t = (int)a.find(" "))
+        {
+            string temp = a.substr(0,t);
+            v.push_back(temp);
+            a = a.substr(t+1);
+        }
+        v.push_back(a);     //上面这部分切割了字符串并全部放入向量。
+
+        for(int j=0;j<v.size();j++)     //对向量里面元素遍历
+        {
+            if(v[j].size()==2 && v[j][0] == '-')     //如果是命令
+            {
+                char c = v[j][1];     //找到命令
+                int next = (int)s.find(c);
+                if(next==-1)     //如果命令非法则跳出
+                    break;
+                if(map1.find(v[j]) == map1.end())     //如果命令不存在则添加，键值对第二个参数默认为空
+                    map1.insert(pair<string,string>(v[j],""));
+                if(next+1<s.size() && s[next+1]==':' && j+1<v.size()){
+                    map<string,string>::iterator it = map1.find(v[j]);
+                    it->second = v[j+1];
+                    j++;
+                }     //上面是对第i＋1个v元素检查，如果i个v元素需要参数则写入map键值对的second，此办法直接覆盖前一个参数
+            } else if(j!=0)     //如果不是命令且不为第一个（程序名）则跳出
+                break;
+
+        }
+             //由于map本身就是按键的值升序排列，少去了自己排序麻烦，可直接迭代器输出
+        cout<<"Case "<<i<<":";
+        for(map<string,string>::iterator it = map1.begin();it != map1.end();it++)
+        {
+            cout<<" "<<it->first;
+            if(it->second !="")     //这么写是为了输出格式考虑，以免程序不通过
+                cout<<" "<<it->second;
+        }
+        cout<<endl;
+    }
+    return 0;
+}

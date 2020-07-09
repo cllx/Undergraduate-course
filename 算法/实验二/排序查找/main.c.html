@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+.sc1 {
+	color: #008000;
+}
+.sc2 {
+	color: #008000;
+}
+.sc4 {
+	color: #FF8000;
+}
+.sc5 {
+	font-weight: bold;
+	color: #0000FF;
+}
+.sc6 {
+	color: #808080;
+}
+.sc9 {
+	color: #804000;
+}
+.sc10 {
+	font-weight: bold;
+	color: #000080;
+}
+.sc11 {
+}
+.sc16 {
+	color: #8000FF;
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc1">/*
+*20140031 陈小龙 计科2班
+*/</span><span class="sc0">
+</span><span class="sc9">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">swap</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc10">*</span><span class="sc11">a</span><span class="sc10">,</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc10">*</span><span class="sc11">b</span><span class="sc10">){</span><span class="sc0">
+    </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">c</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc11">c</span><span class="sc10">=*</span><span class="sc11">a</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">*</span><span class="sc11">a</span><span class="sc10">=*</span><span class="sc11">b</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">*</span><span class="sc11">b</span><span class="sc10">=</span><span class="sc11">c</span><span class="sc10">;</span><span class="sc0">
+</span><span class="sc10">}</span><span class="sc0">
+</span><span class="sc2">//这里进行快速排序
+</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc10">*</span><span class="sc11">Partition</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc10">*</span><span class="sc11">array</span><span class="sc10">,</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">l</span><span class="sc10">,</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">r</span><span class="sc10">){</span><span class="sc0">
+    </span><span class="sc5">if</span><span class="sc10">(</span><span class="sc11">l</span><span class="sc10">&gt;=</span><span class="sc11">r</span><span class="sc10">)</span><span class="sc0">
+        </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">array</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">p</span><span class="sc10">=</span><span class="sc11">array</span><span class="sc10">[</span><span class="sc11">l</span><span class="sc10">],</span><span class="sc11">i</span><span class="sc10">=</span><span class="sc11">l</span><span class="sc10">,</span><span class="sc11">j</span><span class="sc10">=</span><span class="sc11">r</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc5">while</span><span class="sc10">(</span><span class="sc11">i</span><span class="sc10">&lt;</span><span class="sc11">j</span><span class="sc10">){</span><span class="sc0">
+        </span><span class="sc5">while</span><span class="sc10">(</span><span class="sc11">i</span><span class="sc10">&lt;</span><span class="sc11">j</span><span class="sc0"> </span><span class="sc10">&amp;&amp;</span><span class="sc0"> </span><span class="sc11">array</span><span class="sc10">[</span><span class="sc11">j</span><span class="sc10">]&gt;=</span><span class="sc11">p</span><span class="sc10">)</span><span class="sc0">
+            </span><span class="sc11">j</span><span class="sc10">--;</span><span class="sc0">
+        </span><span class="sc11">swap</span><span class="sc10">(&amp;</span><span class="sc11">array</span><span class="sc10">[</span><span class="sc11">i</span><span class="sc10">],&amp;</span><span class="sc11">array</span><span class="sc10">[</span><span class="sc11">j</span><span class="sc10">]);</span><span class="sc0">
+        </span><span class="sc5">while</span><span class="sc10">(</span><span class="sc11">i</span><span class="sc10">&lt;</span><span class="sc11">j</span><span class="sc0"> </span><span class="sc10">&amp;&amp;</span><span class="sc0"> </span><span class="sc11">array</span><span class="sc10">[</span><span class="sc11">i</span><span class="sc10">]&lt;=</span><span class="sc11">p</span><span class="sc10">)</span><span class="sc0">
+            </span><span class="sc11">i</span><span class="sc10">++;</span><span class="sc0">
+        </span><span class="sc11">swap</span><span class="sc10">(&amp;</span><span class="sc11">array</span><span class="sc10">[</span><span class="sc11">j</span><span class="sc10">],&amp;</span><span class="sc11">array</span><span class="sc10">[</span><span class="sc11">i</span><span class="sc10">]);</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+    </span><span class="sc11">Partition</span><span class="sc10">(</span><span class="sc11">array</span><span class="sc10">,</span><span class="sc11">l</span><span class="sc10">,</span><span class="sc11">i</span><span class="sc10">-</span><span class="sc4">1</span><span class="sc10">);</span><span class="sc0">
+    </span><span class="sc11">Partition</span><span class="sc10">(</span><span class="sc11">array</span><span class="sc10">,</span><span class="sc11">i</span><span class="sc10">+</span><span class="sc4">1</span><span class="sc10">,</span><span class="sc11">r</span><span class="sc10">);</span><span class="sc0">
+    </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">array</span><span class="sc10">;</span><span class="sc0">
+</span><span class="sc10">}</span><span class="sc0">
+</span><span class="sc2">//这里进行折半查找
+</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">ersearch</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">array</span><span class="sc10">[],</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">n</span><span class="sc10">,</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">k</span><span class="sc10">){</span><span class="sc0">
+    </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">low</span><span class="sc10">=</span><span class="sc4">0</span><span class="sc10">,</span><span class="sc11">high</span><span class="sc10">=</span><span class="sc11">n</span><span class="sc10">-</span><span class="sc4">1</span><span class="sc10">,</span><span class="sc11">m</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc5">while</span><span class="sc10">(</span><span class="sc11">low</span><span class="sc10">&lt;=</span><span class="sc11">high</span><span class="sc10">){</span><span class="sc0">
+        </span><span class="sc11">m</span><span class="sc10">=(</span><span class="sc11">low</span><span class="sc10">+</span><span class="sc11">high</span><span class="sc10">)/</span><span class="sc4">2</span><span class="sc10">;</span><span class="sc0">
+        </span><span class="sc5">if</span><span class="sc10">(</span><span class="sc11">k</span><span class="sc10">==</span><span class="sc11">array</span><span class="sc10">[</span><span class="sc11">m</span><span class="sc10">])</span><span class="sc0">
+            </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">m</span><span class="sc10">;</span><span class="sc0">
+        </span><span class="sc5">else</span><span class="sc0"> </span><span class="sc5">if</span><span class="sc10">(</span><span class="sc11">k</span><span class="sc10">&gt;</span><span class="sc11">array</span><span class="sc10">[</span><span class="sc11">m</span><span class="sc10">])</span><span class="sc0">
+            </span><span class="sc11">low</span><span class="sc10">=</span><span class="sc11">m</span><span class="sc10">+</span><span class="sc4">1</span><span class="sc10">;</span><span class="sc0">
+        </span><span class="sc5">else</span><span class="sc0">
+            </span><span class="sc11">high</span><span class="sc10">=</span><span class="sc11">m</span><span class="sc10">-</span><span class="sc4">1</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+    </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc10">-</span><span class="sc4">1</span><span class="sc10">;</span><span class="sc0">
+</span><span class="sc10">}</span><span class="sc0">
+</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">main</span><span class="sc10">()</span><span class="sc0">
+</span><span class="sc10">{</span><span class="sc0">
+    </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">i</span><span class="sc10">=</span><span class="sc4">0</span><span class="sc10">,</span><span class="sc11">a</span><span class="sc10">[]={</span><span class="sc4">56</span><span class="sc10">,</span><span class="sc4">87</span><span class="sc10">,</span><span class="sc4">789</span><span class="sc10">,</span><span class="sc4">54</span><span class="sc10">,</span><span class="sc4">12</span><span class="sc10">,</span><span class="sc4">35</span><span class="sc10">,</span><span class="sc4">11</span><span class="sc10">,</span><span class="sc4">102</span><span class="sc10">,</span><span class="sc4">456</span><span class="sc10">,</span><span class="sc4">7821</span><span class="sc10">,</span><span class="sc4">2</span><span class="sc10">,</span><span class="sc4">44</span><span class="sc10">,</span><span class="sc4">245</span><span class="sc10">,</span><span class="sc4">56</span><span class="sc10">,</span><span class="sc4">879</span><span class="sc10">,</span><span class="sc4">45</span><span class="sc10">,</span><span class="sc4">82</span><span class="sc10">,</span><span class="sc4">57</span><span class="sc10">,</span><span class="sc4">62</span><span class="sc10">,</span><span class="sc4">30</span><span class="sc10">},</span><span class="sc11">k</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc10">*</span><span class="sc11">b</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc11">b</span><span class="sc10">=</span><span class="sc11">Partition</span><span class="sc10">(</span><span class="sc11">a</span><span class="sc10">,</span><span class="sc4">0</span><span class="sc10">,</span><span class="sc4">19</span><span class="sc10">);</span><span class="sc0">
+    </span><span class="sc11">printf</span><span class="sc10">(</span><span class="sc6">"快速排序后的数组为:"</span><span class="sc10">);</span><span class="sc0">
+    </span><span class="sc5">for</span><span class="sc10">(</span><span class="sc11">i</span><span class="sc10">=</span><span class="sc4">0</span><span class="sc10">;</span><span class="sc11">i</span><span class="sc10">&lt;</span><span class="sc4">20</span><span class="sc10">;</span><span class="sc11">i</span><span class="sc10">++){</span><span class="sc0">
+        </span><span class="sc11">printf</span><span class="sc10">(</span><span class="sc6">"%d  "</span><span class="sc10">,</span><span class="sc11">b</span><span class="sc10">[</span><span class="sc11">i</span><span class="sc10">]);</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+    </span><span class="sc11">printf</span><span class="sc10">(</span><span class="sc6">"\n输入要查找的数:"</span><span class="sc10">);</span><span class="sc0">
+    </span><span class="sc11">scanf</span><span class="sc10">(</span><span class="sc6">"%d"</span><span class="sc10">,&amp;</span><span class="sc11">k</span><span class="sc10">);</span><span class="sc0">
+    </span><span class="sc11">printf</span><span class="sc10">(</span><span class="sc6">"该数对应的下标值是：%d\n"</span><span class="sc10">,</span><span class="sc11">ersearch</span><span class="sc10">(</span><span class="sc11">a</span><span class="sc10">,</span><span class="sc4">20</span><span class="sc10">,</span><span class="sc11">k</span><span class="sc10">));</span><span class="sc0">
+    </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0">
+</span><span class="sc10">}</span><span class="sc0">
+</span></div></body>
+</html>

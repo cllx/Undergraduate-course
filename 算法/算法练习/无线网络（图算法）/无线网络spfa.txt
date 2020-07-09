@@ -1,0 +1,89 @@
+//虽然被那两个题搞得有点不敢做题，但是比赛的时候该做还是要做的呀，毕竟如果思路对了的话  
+//再怎么说RP差也是会得分的吧   
+#include<algorithm>  
+#include<cstdio>  
+#include<cstring>  
+#include<iostream>  
+#include<queue>  
+#define N 205  
+#define INF 0x3f3f3f3f  
+typedef long long LL;  
+using namespace std;  
+  
+struct P {  
+    int x,y;  
+} p[N];  
+  
+  
+int n,m,k,r;  
+int d[N][N];  
+bool vis[N][N],Map[N][N];  
+  
+void spfa() {  
+    queue<P> q;  
+    memset(vis,0,sizeof(vis));  
+    memset(d,INF,sizeof(d));  
+    //这里的d[i][j]和vis[i][j]有特殊的含义  
+    // d[i][j]表示从起点开始，经过增设的j个点，到达第i个点的最短路径   
+    // vis[i][j]表示是否可以从起点经过增设的j个路由器到达i  
+    d[0][0]=0;   
+    vis[0][0]=1;  
+    //这里的s和tem感觉已经不再是表示一个点了，所以有点错觉   
+    P s,tem;  
+    int des_p=0,ap_num=0;   
+    int tp_des_p,tp_ap_num;  
+        s.x=s.y=des_p;  
+    q.push(s);  
+    while(!q.empty()) {  
+        s=q.front();  
+        q.pop();  
+        des_p=s.x;  
+        ap_num=s.y;  
+        vis[des_p][ap_num]=0;  
+        for(int i=0; i<n+m; ++i)  
+        //和s点相连的点   
+        //另外看到这里莫名感觉这题简单（什么都不会，但有一种莫名的自信）   
+        //这哪是spfa啊，更像是普通的bfs（写完我就后悔了= =）   
+        //这里的s.x其实就是点的编号。程序可读性差= =（明明可以用别的表示的，非得图省事用P，差评！）   
+        //嗯……这个程序有点带劲啊╮(╯▽╰)╭   
+            if(Map[des_p][i]) {  
+                //下面这几句是重点啊  
+                tp_des_p=i;  
+                tp_ap_num=ap_num;  
+                if(i>=n) ++tp_ap_num;  
+                if(tp_ap_num<=k && d[tp_des_p][tp_ap_num]>d[des_p][ap_num]+1) {  
+                    //只要符合以上条件就进行松弛   
+                    d[tp_des_p][tp_ap_num]=d[des_p][ap_num]+1;  
+                    //如果不在队列里就让其进入队列   
+                    if(!vis[tp_des_p][tp_ap_num]) {  
+                        vis[tp_des_p][tp_ap_num]=1;  
+                        //进入队列的其实是起点所到目的地点和经过的增设点数   
+                        tem.x=tp_des_p;  
+                        tem.y=tp_ap_num;  
+                        q.push(tem);  
+                    }  
+                }  
+            }  
+    }  
+    int ans=INF;  
+    for(int i=0; i<=k; i++) ans=min(ans,d[1][i]);  
+    printf("%d\n",ans-1);  
+}  
+  
+int main() {  
+    int i,j;  
+    cin>>n>>m>>k>>r;  
+    //输入存在的点和可以放置的点   
+    for(i=0; i<n+m; ++i) scanf("%d%d",&p[i].x,&p[i].y);  
+    //map是邻接矩阵   
+    memset(Map,0,sizeof(Map));  
+    //这个循环看起来不免重复，但是没超时   
+    for(i=0; i<n+m; ++i)  
+        for(j=i+1; j<n+m; ++j)  
+        //LL就是long long int，这里是强制类型转换   
+            if(LL(p[i].x-p[j].x)*(p[i].x-p[j].x)+LL(p[i].y-p[j].y)*(p[i].y-p[j].y)<=LL(r)*r)  
+                Map[i][j]=Map[j][i]=1;  
+  
+    spfa();  
+    return 0;  
+}  

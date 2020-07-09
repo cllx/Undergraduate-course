@@ -1,0 +1,68 @@
+# include <stdio.h>
+# define MAX 510
+
+int n;
+int i,j;
+int m[MAX][MAX];
+typedef struct{
+  int x,y;
+} pos; // define a poit struct
+
+void show(pos p)
+{
+  printf("%d ",m[p.x][p.y]);
+}
+
+int main()
+{
+  pos current = {0,0};
+  scanf("%d",&n);
+  for(i = 0;i < n; ++i){
+    for(j = 0; j < n;++j){
+      scanf("%d", &m[i][j]);
+    }
+  }//end of for i
+  // data collect end
+  show(current);
+  while(1){
+    if (current.x == current.y && current.x == n-1){
+      // the end condition
+      break;
+    }
+    if (current.x > n - 1 || current.y > n-1 ) break;
+    // right or down
+    if (current.y == n-1){
+      // down
+      current.x += 1;
+      show(current);
+    }else{
+      // right
+      current.y += 1;
+      show(current);
+    }
+    // then go left down
+    while(current.x < n - 1 && current.y > 0){
+      current.x +=1;
+      current.y -=1;
+      show(current);
+    }
+    // go down or right
+    if (current.x == n - 1 && current.y < n-1){
+      // can not go down then right
+      current.y += 1;
+      show(current);
+    }else{
+      // go down
+      current.x += 1;
+      show(current);
+    }
+    // up and right
+    while(current.x > 0 && current.y < n -1){
+      current.x -=1;
+      current.y +=1;
+      show(current);
+    }
+  }
+  printf("\n");
+  return 0;
+}

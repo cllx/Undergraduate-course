@@ -1,0 +1,63 @@
+#include<cstdio>
+#include<iostream>
+#include<algorithm>
+#include<cstring>
+#include<queue>
+#define MAX 1010
+using namespace std;
+
+int n,m,k,d;
+int v[4][2]={{-1,0},{1,0},{0,-1},{0,1}};
+int vis[MAX][MAX];
+long long order[MAX][MAX];
+struct Node{
+    int x,y;    
+    long long dis;
+    Node(){}
+    Node(int xx,int yy,int c){
+        x=xx,y=yy;
+        dis=c;
+    }
+};
+queue<Node>Q;
+
+void init(){
+    cin>>n>>m>>k>>d;
+    int a,b,c;
+    for(int i=0;i<m;i++){
+        cin>>a>>b;
+        Q.push(Node(a,b,0));
+    }
+    for(int i=0;i<k;i++){
+        cin>>a>>b>>c;
+        order[a][b]+=c;
+    }
+    for(int i=0;i<d;i++){
+        cin>>a>>b;
+        vis[a][b]=1;
+    }
+}
+
+void solve(){
+    long long ans=0;
+    while(!Q.empty()){
+        Node t=Q.front();
+        Q.pop();
+        int x=t.x,y=t.y,dis=t.dis;
+        for(int i=0;i<4;i++){
+            int xx=x+v[i][0],yy=y+v[i][1];
+            if(xx>=1&&xx<=n&&yy>=1&&yy<=n&&!vis[xx][yy]){
+                ans+=order[xx][yy]*(dis+1);
+                vis[xx][yy]=1;
+                Q.push(Node(xx,yy,dis+1));
+            }
+        }
+    }
+    cout<<ans<<endl;
+}
+
+int main(){
+    init();
+    solve();
+    return 0;
+}

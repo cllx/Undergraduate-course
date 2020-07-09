@@ -1,0 +1,99 @@
+#include<iostream>
+using namespace std;
+
+int lc = 0;
+
+class Closedge{
+public:
+    int adjvex;
+    int lowcost;
+};
+
+int minmum(Closedge* closedge,int size){
+        int temp=closedge[0].lowcost,k=0,i=0;
+        while(temp==-1 && i<size){
+            temp=closedge[i+1].lowcost;
+            i++;
+            k=i;
+        }//while
+        for(;++i<size;){
+            if(closedge[i].lowcost!=-1 && temp>closedge[i].lowcost){
+                temp=closedge[i].lowcost;
+                k=i;
+            }//if
+        }//for
+        return k;
+    }//minmum
+
+int main(){
+    int m,n,x,y,w,i,j;
+
+    int index = 1;
+    cin>>m>>n;
+
+    int **Matrix=new int*[m];
+    for(i=-1;++i<m;){
+        Matrix[i]=new int[m];
+        for(j=-1;++j<m;){
+            Matrix[i][j]=9999;
+            //cout<<Matrix[i][j]<<" ";
+        }//for
+        //cout<<endl;
+    }//for
+
+
+    while(n--){
+        cin>>x>>y>>w;
+        Matrix[x-1][y-1] = w;
+        Matrix[y-1][x-1] = w;
+    }
+/*  for(i=-1;++i<m;){
+        for(j=-1;++j<m;){
+            cout<<Matrix[i][j]<<" ";
+        }//for
+        cout<<endl;
+    }//for*/
+    //用k来表示当前访问的结点
+    int k=index;
+    //Closedge{adjvex,lowcost}  adjvex表示当前为adjvex这个编号的结点指向以下标+1为编号的结点所需要的权值比其它边都要小
+    //lowcost记录这个权值最小的边
+    Closedge *closedge=new Closedge[m];
+    //初始化closedge数组，把index(即k)这个编号的结点指向其它Size-1个结点的权值储存进lowcost来 adjvex全部赋值为index
+    //如果index与某个结点不相通的话直接赋值为-1，在以后的判断中会把-1排除掉
+    for(i=-1;++i<m;){
+        closedge[i].lowcost=-1;
+        closedge[i].adjvex=-1;
+        if(i!=k-1){
+            closedge[i].adjvex=k;
+            closedge[i].lowcost=Matrix[k-1][i];
+        }//if
+    }//for
+    //起点已经访问过了，直接赋值为-1
+    closedge[k-1].lowcost=-1;
+    //开始遍历结点之旅
+    for(i=0;++i<m;){
+        k=minmum(closedge,m);  //minmum函数是获取closedge数组中lowcost最小的那个结点下标
+        //      cout<<"k="<<k<<" ";
+        lc += closedge[k].lowcost;
+     //     cout<<closedge[k].adjvex-1<<"-"<<k<<endl;   //输出最小的那条边
+        index=k+1;                     //访问的结点改成查找到的结点
+        closedge[k].lowcost=-1;         //设置已找到的结点为已访问
+        //对找到的结点进行对其它未访问的结点的遍历，由于已访问的结点lowcost已被标为-1，所以if判断语句无法通过
+        for(int j=-1;++j<m;)
+        {
+            if(Matrix[k][j]<closedge[j].lowcost){  //如果这个结点访问某个结点的权值比上一个结点访问同一个结点的权值要小
+                //更改成更小的权值
+                closedge[j].adjvex=k+1;
+                closedge[j].lowcost=Matrix[k][j];
+            }//if
+        //  cout<<closedge[j].adjvex<<" "<<closedge[j].lowcost<<endl;
+        }//for
+    }//for
+    cout<<lc<<endl;
+    for(i=-1;++i<m;){
+        delete[]Matrix[i];
+    }//for
+    delete[]Matrix;
+    delete[]closedge;
+    return 0;
+}//main

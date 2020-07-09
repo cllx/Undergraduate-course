@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+.sc1 {
+	color: #008000;
+}
+.sc2 {
+	color: #008000;
+}
+.sc4 {
+	color: #FF8000;
+}
+.sc5 {
+	font-weight: bold;
+	color: #0000FF;
+}
+.sc6 {
+	color: #808080;
+}
+.sc9 {
+	color: #804000;
+}
+.sc10 {
+	font-weight: bold;
+	color: #000080;
+}
+.sc11 {
+}
+.sc16 {
+	color: #8000FF;
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc1">/*
+*20140031 陈小龙 计科2班
+*/</span><span class="sc0">
+</span><span class="sc9">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#define MAXVEX 50                  </span><span class="sc2">//图中最大节点数
+</span><span class="sc9">#define MAXIMUN 65535              </span><span class="sc2">//定义为最大数
+</span><span class="sc0">
+</span><span class="sc5">typedef</span><span class="sc0"> </span><span class="sc16">struct</span><span class="sc10">{</span><span class="sc0">                   </span><span class="sc2">//定义邻接矩阵的数据结构
+</span><span class="sc0">    </span><span class="sc16">char</span><span class="sc0"> </span><span class="sc11">vexs</span><span class="sc10">[</span><span class="sc11">MAXVEX</span><span class="sc10">];</span><span class="sc0">
+    </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">edges</span><span class="sc10">[</span><span class="sc11">MAXVEX</span><span class="sc10">][</span><span class="sc11">MAXVEX</span><span class="sc10">];</span><span class="sc0">
+    </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">vexNum</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">adgeNum</span><span class="sc10">;</span><span class="sc0">           </span><span class="sc2">//分别表示图中节点个数和边的条数
+</span><span class="sc10">}</span><span class="sc11">AGraph</span><span class="sc10">;</span><span class="sc0">
+
+
+</span><span class="sc2">//Prim算法求解最小生成树
+</span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">prim</span><span class="sc10">(</span><span class="sc11">AGraph</span><span class="sc0"> </span><span class="sc10">*</span><span class="sc11">g</span><span class="sc10">){</span><span class="sc0">
+    </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">U</span><span class="sc10">[</span><span class="sc11">MAXVEX</span><span class="sc10">],</span><span class="sc0"> </span><span class="sc11">S</span><span class="sc10">[</span><span class="sc11">MAXVEX</span><span class="sc10">],</span><span class="sc0"> </span><span class="sc11">n</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0">     </span><span class="sc2">//U存放以加入的顶点,S存放剩余的顶点,已加入U中的顶点个数
+</span><span class="sc0">    </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">j</span><span class="sc10">,</span><span class="sc11">min</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0">                        </span><span class="sc2">//用于保存生成树的总权值
+</span><span class="sc0">    </span><span class="sc5">for</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">i</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc11">i</span><span class="sc0"> </span><span class="sc10">&lt;</span><span class="sc0"> </span><span class="sc11">g</span><span class="sc10">-&gt;</span><span class="sc11">vexNum</span><span class="sc10">;++</span><span class="sc11">i</span><span class="sc10">){</span><span class="sc0">  </span><span class="sc2">//将图中的顶点存入S中，只存储顶点的编号.
+</span><span class="sc0">        </span><span class="sc11">S</span><span class="sc10">[</span><span class="sc11">i</span><span class="sc10">]</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">i</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+    </span><span class="sc11">U</span><span class="sc10">[</span><span class="sc4">0</span><span class="sc10">]</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0">                           </span><span class="sc2">//将任意一个顶点放入集合U中，这里假设放入0号顶点
+</span><span class="sc0">    </span><span class="sc10">++</span><span class="sc11">n</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc11">S</span><span class="sc10">[</span><span class="sc4">0</span><span class="sc10">]</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc10">-</span><span class="sc4">1</span><span class="sc10">;</span><span class="sc0">                          </span><span class="sc2">//同时从S中去掉0号顶点，这里赋值为-1
+</span><span class="sc0">    </span><span class="sc11">printf</span><span class="sc10">(</span><span class="sc6">"\n最小生成树由这些边构成：\n"</span><span class="sc10">);</span><span class="sc0">
+    </span><span class="sc5">for</span><span class="sc10">(</span><span class="sc11">j</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">1</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc11">j</span><span class="sc0"> </span><span class="sc10">&lt;</span><span class="sc0"> </span><span class="sc11">g</span><span class="sc10">-&gt;</span><span class="sc11">vexNum</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc10">++</span><span class="sc11">j</span><span class="sc10">){</span><span class="sc0">
+        </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">mintemp</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">MAXIMUN</span><span class="sc10">;</span><span class="sc0">
+        </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">indexK</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">indexP</span><span class="sc10">;</span><span class="sc0">
+</span><span class="sc2">//贪心法寻找最优加入顶点并用index记录其位置
+</span><span class="sc0">        </span><span class="sc5">for</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">k</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc11">k</span><span class="sc0"> </span><span class="sc10">&lt;</span><span class="sc0"> </span><span class="sc11">n</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc10">++</span><span class="sc11">k</span><span class="sc10">){</span><span class="sc0">
+            </span><span class="sc5">for</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">p</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc11">p</span><span class="sc0"> </span><span class="sc10">&lt;</span><span class="sc0"> </span><span class="sc11">g</span><span class="sc10">-&gt;</span><span class="sc11">vexNum</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc10">++</span><span class="sc11">p</span><span class="sc10">)</span><span class="sc0">
+            </span><span class="sc5">if</span><span class="sc10">((</span><span class="sc11">S</span><span class="sc10">[</span><span class="sc11">p</span><span class="sc10">]</span><span class="sc0"> </span><span class="sc10">!=</span><span class="sc0"> </span><span class="sc10">-</span><span class="sc4">1</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">&amp;&amp;</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">mintemp</span><span class="sc0"> </span><span class="sc10">&gt;</span><span class="sc11">g</span><span class="sc10">-&gt;</span><span class="sc11">edges</span><span class="sc10">[</span><span class="sc11">U</span><span class="sc10">[</span><span class="sc11">k</span><span class="sc10">]][</span><span class="sc11">p</span><span class="sc10">])){</span><span class="sc0">
+                </span><span class="sc11">indexK</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">U</span><span class="sc10">[</span><span class="sc11">k</span><span class="sc10">];</span><span class="sc0">
+                </span><span class="sc11">indexP</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">p</span><span class="sc10">;</span><span class="sc0">
+                </span><span class="sc11">mintemp</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">g</span><span class="sc10">-&gt;</span><span class="sc11">edges</span><span class="sc10">[</span><span class="sc11">indexK</span><span class="sc10">][</span><span class="sc11">indexP</span><span class="sc10">];</span><span class="sc0">
+            </span><span class="sc10">}</span><span class="sc0">
+        </span><span class="sc10">}</span><span class="sc0">
+        </span><span class="sc11">U</span><span class="sc10">[</span><span class="sc11">n</span><span class="sc10">++]</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">indexP</span><span class="sc10">;</span><span class="sc0">                                  </span><span class="sc2">//将顶点加入U中
+</span><span class="sc0">        </span><span class="sc11">S</span><span class="sc10">[</span><span class="sc11">indexP</span><span class="sc10">]</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc10">-</span><span class="sc4">1</span><span class="sc10">;</span><span class="sc0">                                   </span><span class="sc2">//将该顶点从S中去掉
+</span><span class="sc0">        </span><span class="sc11">min</span><span class="sc0"> </span><span class="sc10">+=</span><span class="sc0"> </span><span class="sc11">mintemp</span><span class="sc10">;</span><span class="sc0">
+        </span><span class="sc11">printf</span><span class="sc10">(</span><span class="sc6">"%d-&gt;%d "</span><span class="sc10">,</span><span class="sc11">g</span><span class="sc10">-&gt;</span><span class="sc11">vexs</span><span class="sc10">[</span><span class="sc11">indexK</span><span class="sc10">],</span><span class="sc11">g</span><span class="sc10">-&gt;</span><span class="sc11">vexs</span><span class="sc10">[</span><span class="sc11">indexP</span><span class="sc10">]);</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+    </span><span class="sc11">printf</span><span class="sc10">(</span><span class="sc6">"\n最小生成树的总权重为：%d\n"</span><span class="sc10">,</span><span class="sc11">min</span><span class="sc10">);</span><span class="sc0">
+</span><span class="sc10">}</span><span class="sc0">
+</span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">createAG</span><span class="sc10">(</span><span class="sc11">AGraph</span><span class="sc0"> </span><span class="sc10">*</span><span class="sc11">g</span><span class="sc10">)</span><span class="sc0">                                  </span><span class="sc2">//创建无向网
+</span><span class="sc10">{</span><span class="sc0">
+    </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">vNum</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">aNum</span><span class="sc10">;</span><span class="sc0">                                       </span><span class="sc2">//分别代表要创建的图的节点数和边数
+</span><span class="sc0">    </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">start</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">end</span><span class="sc10">;</span><span class="sc0">                                       </span><span class="sc2">//start-&gt;end表示节点start和end之间有一条边
+</span><span class="sc0">    </span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">weight</span><span class="sc10">;</span><span class="sc0">                                           </span><span class="sc2">//边的权重
+</span><span class="sc0">    </span><span class="sc11">printf</span><span class="sc10">(</span><span class="sc6">"请输入图中节点的个数和边的条数:"</span><span class="sc10">);</span><span class="sc0">
+    </span><span class="sc11">scanf</span><span class="sc10">(</span><span class="sc6">"%d %d"</span><span class="sc10">,&amp;</span><span class="sc11">vNum</span><span class="sc10">,&amp;</span><span class="sc11">aNum</span><span class="sc10">);</span><span class="sc0">
+    </span><span class="sc11">printf</span><span class="sc10">(</span><span class="sc6">"请输入%d个节点的信息："</span><span class="sc10">,</span><span class="sc11">vNum</span><span class="sc10">);</span><span class="sc0">
+</span><span class="sc2">//创建节点
+</span><span class="sc0">    </span><span class="sc5">for</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">i</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc11">i</span><span class="sc0"> </span><span class="sc10">&lt;</span><span class="sc0"> </span><span class="sc11">vNum</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc10">++</span><span class="sc11">i</span><span class="sc10">){</span><span class="sc0">
+        </span><span class="sc11">scanf</span><span class="sc10">(</span><span class="sc6">"%d"</span><span class="sc10">,&amp;</span><span class="sc11">g</span><span class="sc10">-&gt;</span><span class="sc11">vexs</span><span class="sc10">[</span><span class="sc11">i</span><span class="sc10">]);</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+    </span><span class="sc11">printf</span><span class="sc10">(</span><span class="sc6">"这里输出节点编号及其存储的节点信息\n"</span><span class="sc10">);</span><span class="sc0">
+    </span><span class="sc5">for</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">k</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc11">k</span><span class="sc0"> </span><span class="sc10">&lt;</span><span class="sc0"> </span><span class="sc11">vNum</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc10">++</span><span class="sc11">k</span><span class="sc10">){</span><span class="sc0">
+        </span><span class="sc11">printf</span><span class="sc10">(</span><span class="sc6">"%d:%d "</span><span class="sc10">,</span><span class="sc11">k</span><span class="sc10">,</span><span class="sc11">g</span><span class="sc10">-&gt;</span><span class="sc11">vexs</span><span class="sc10">[</span><span class="sc11">k</span><span class="sc10">]);</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+    </span><span class="sc11">printf</span><span class="sc10">(</span><span class="sc6">"\n"</span><span class="sc10">);</span><span class="sc0">
+</span><span class="sc2">//初始化无向图的边信息
+</span><span class="sc0">    </span><span class="sc5">for</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">m</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc11">m</span><span class="sc0"> </span><span class="sc10">&lt;</span><span class="sc0"> </span><span class="sc11">vNum</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc10">++</span><span class="sc11">m</span><span class="sc10">)</span><span class="sc0">
+        </span><span class="sc5">for</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">n</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc11">n</span><span class="sc0"> </span><span class="sc10">&lt;</span><span class="sc0"> </span><span class="sc11">vNum</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc10">++</span><span class="sc11">n</span><span class="sc10">){</span><span class="sc0">
+            </span><span class="sc11">g</span><span class="sc10">-&gt;</span><span class="sc11">edges</span><span class="sc10">[</span><span class="sc11">m</span><span class="sc10">][</span><span class="sc11">n</span><span class="sc10">]</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">MAXIMUN</span><span class="sc10">;</span><span class="sc0">
+        </span><span class="sc10">}</span><span class="sc0">
+</span><span class="sc2">//创建无向图的边信息
+</span><span class="sc0">    </span><span class="sc5">for</span><span class="sc10">(</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">j</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc11">j</span><span class="sc0"> </span><span class="sc10">&lt;</span><span class="sc0"> </span><span class="sc11">aNum</span><span class="sc10">;</span><span class="sc0"> </span><span class="sc10">++</span><span class="sc11">j</span><span class="sc10">){</span><span class="sc0">
+        </span><span class="sc11">printf</span><span class="sc10">(</span><span class="sc6">"\n请输入第%d条边的start和end节点和边的权重weight:"</span><span class="sc10">,</span><span class="sc11">j</span><span class="sc10">+</span><span class="sc4">1</span><span class="sc10">);</span><span class="sc0">
+        </span><span class="sc11">scanf</span><span class="sc10">(</span><span class="sc6">"%d %d %d"</span><span class="sc10">,&amp;</span><span class="sc11">start</span><span class="sc10">,&amp;</span><span class="sc11">end</span><span class="sc10">,&amp;</span><span class="sc11">weight</span><span class="sc10">);</span><span class="sc0">
+        </span><span class="sc11">g</span><span class="sc10">-&gt;</span><span class="sc11">edges</span><span class="sc10">[</span><span class="sc11">start</span><span class="sc10">][</span><span class="sc11">end</span><span class="sc10">]</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">weight</span><span class="sc10">;</span><span class="sc0">
+        </span><span class="sc11">g</span><span class="sc10">-&gt;</span><span class="sc11">edges</span><span class="sc10">[</span><span class="sc11">end</span><span class="sc10">][</span><span class="sc11">start</span><span class="sc10">]</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">weight</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc10">}</span><span class="sc0">
+</span><span class="sc2">//初始化vexNum和adgeNum
+</span><span class="sc0">    </span><span class="sc11">g</span><span class="sc10">-&gt;</span><span class="sc11">vexNum</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">vNum</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc11">g</span><span class="sc10">-&gt;</span><span class="sc11">adgeNum</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">aNum</span><span class="sc10">;</span><span class="sc0">
+</span><span class="sc10">}</span><span class="sc0">
+
+</span><span class="sc16">int</span><span class="sc0"> </span><span class="sc11">main</span><span class="sc10">(){</span><span class="sc0">
+    </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">createAG</span><span class="sc10">(</span><span class="sc11">AGraph</span><span class="sc0"> </span><span class="sc10">*);</span><span class="sc0">
+    </span><span class="sc16">void</span><span class="sc0"> </span><span class="sc11">prim</span><span class="sc10">(</span><span class="sc11">AGraph</span><span class="sc10">*);</span><span class="sc0">
+    </span><span class="sc11">AGraph</span><span class="sc0"> </span><span class="sc11">g</span><span class="sc10">;</span><span class="sc0">
+    </span><span class="sc11">createAG</span><span class="sc10">(&amp;</span><span class="sc11">g</span><span class="sc10">);</span><span class="sc0">
+    </span><span class="sc11">prim</span><span class="sc10">(&amp;</span><span class="sc11">g</span><span class="sc10">);</span><span class="sc0">
+    </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc4">0</span><span class="sc10">;</span><span class="sc0">
+</span><span class="sc10">}</span></div></body>
+</html>

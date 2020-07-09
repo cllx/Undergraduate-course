@@ -1,0 +1,88 @@
+import java.util.Scanner;  
+   
+public class Main {  
+   
+    //下面四个变量代表四个方向  
+    public static final int RIGHT = 1;    //向右走  
+    public static final int DOWN = 2; //向下走  
+    public static final int LEFTDOWN = 3; //向做下走  
+    public static final int RIGHTUP = 4;  //向右上走  
+       
+    public static int data[][];            //矩阵  
+       
+    public static void main(String[] args) {  
+        new Main().run();  
+    }  
+       
+    public static void run(){  
+        //接收输入  
+        Scanner scanner = new Scanner(System.in);  
+        int n = scanner.nextInt();  
+        data = new int[n][n];  
+           
+        for(int i = 0; i < n; i++){  
+            for(int j = 0; j < n; j++){  
+                data[i][j] = scanner.nextInt();  
+            }  
+        }  
+           
+        //从第一个位置开始，x为横坐标，y为纵坐标，注意x,y在二维数组中的位置  
+        int x = 0;  
+        int y = 0;  
+        //输出要求有空格隔开  
+        String result = data[y][x] + " ";  
+        //方向变量的初始值  
+        int direction = 0;     
+           
+        //下面就开始出发走咯  
+        while( !(x == n-1 && y == n-1) ){//循环直至到达终点（最右下角的位置）  
+            //先判断下一步往哪个方向走  
+            if(direction == 0){   //为0说明还没走出第一步，所以接着应该往右边走一步  
+                direction = RIGHT;  
+            } else if(direction == RIGHT){ //上一次方向向右，下一步应该向左下或者右上  
+                if(x-1 >= 0 && y+1 < n){    //左下可走  
+                    direction = LEFTDOWN;  
+                } else {  //只能走右上了  
+                    direction = RIGHTUP;  
+                }  
+            } else if(direction == DOWN){   //上一次方向向下，下一步应该向左下或者右上  
+                if(x-1 >= 0 && y+1 < n){    //左下可走  
+                    direction = LEFTDOWN;  
+                } else {  //只能走右上了  
+                    direction = RIGHTUP;  
+                }  
+            } else if(direction == LEFTDOWN){   //上一次向左下，如果可以，下一步应该继续向左下，否则 向右或者向下走  
+                if(y+1 < n && x-1 >= 0){    //先判断能否继续向左下  
+                    direction = LEFTDOWN;  
+                } else if(y+1 < n){  //然后判断能否向下走  
+                    direction = DOWN;  
+                } else {      //最后只能向右走了  
+                    direction = RIGHT;  
+                }  
+            } else if(direction == RIGHTUP){    //上一次向右上，如果可以，下一步应该继续向右上，否则向右或者下走  
+                if(x+1 < n && y-1 >=0){  //先判断能否继续向右上  
+                    direction = RIGHTUP;  
+                } else if(x+1 < n){  //然后判断能否向右走  
+                    direction = RIGHT;  
+                } else{            //最后只能向下走了  
+                    direction = DOWN;  
+                }  
+            }  
+               
+            //根据上面确定的方向来走出下一步  
+            switch(direction){  
+                case RIGHT: x = x+1; break;  
+                case DOWN: y = y+1; break;  
+                case LEFTDOWN: x = x-1; y = y+1; break;  
+                case RIGHTUP: x = x+1; y = y-1; break;  
+            }  
+               
+            //读取当前走到位置的数字.注意x和y的位置  
+            result += data[y][x] + " ";  
+        }  
+           
+        //输出结果（这里需不需要去掉最后的空格？没怎么玩过ACM，不记得了acc格式控制会不会这么严）  
+        System.out.println(result);  
+    }  
+   
+}

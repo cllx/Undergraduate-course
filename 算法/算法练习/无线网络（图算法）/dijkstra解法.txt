@@ -1,0 +1,96 @@
+#include<iostream>  
+#include<queue>  
+using namespace std;  
+  
+class Router{  
+public:  
+    int x;  
+    int y;  
+    bool v;  
+    Router(){  
+        x = -1;  
+        y = -1;  
+        v = false;  
+    }  
+};  
+  
+int path[200][200] = {0};  
+int len[200]={0};  
+int dist[200]={0};  
+int canput[200] = {0};  
+  
+bool inRange(long long x, long long y , long long r){  
+    return x * x + y * y <= r * r;  
+}  
+  
+int abs(int n){     //取绝对值  
+    return (n^(n>>31))-(n>>31);  
+}  
+  
+  
+  
+int main(){  
+    int n,m,k,r,x,y,i,j,sum,index,cp;  
+    queue<int> q;  
+    cin>>n>>m>>k>>r;  
+    sum = n+m;  
+    Router *put = new Router[sum];  
+    for(i = -1 ; ++i < sum;){  
+        cin>>x>>y;  
+        put[i].x = x;  
+        put[i].y = y;  
+    }  
+    for(i = -1;++i < sum;){  
+        for(j= i;++j < sum;){  
+            if(inRange(abs(put[i].x - put[j].x),abs(put[i].y-put[j].y),r)){  
+                path[i][len[i]++] = j;  
+                path[j][len[j]++] = i;  
+            }  
+        }  
+    }  
+/*  cout<<"终点："<<1<<endl; 
+    for(i = -1;++i<sum;){ 
+        cout<<i<<"： "; 
+        for(j = -1;++j<len[i]-1;){ 
+            cout<<path[i][j]<<" "; 
+        } 
+        if(len[i]>0){ 
+            cout<<path[i][j]; 
+        } 
+        cout<<endl; 
+    }*/  
+    q.push(0);  
+/*  for(j=-1;++j<sum-1;){ 
+        cout<<j<<" "; 
+    } 
+    cout<<j<<endl;*/  
+    while(!q.empty()){  
+        index = q.front();  
+        q.pop();  
+        put[index].v = true;  
+        for(i=-1;++i<len[index];){  
+            cp = canput[path[index][i]];  
+            if(path[index][i]>=n){  
+                cp ++;  
+            }  
+            if(cp<=k && (dist[path[index][i]]==0 || dist[path[index][i]] > dist[index] + 1)){  
+                dist[path[index][i]] = dist[index]+1;  
+                if(put[path[index][i]].v == false){  
+                    q.push(path[index][i]);  
+                }  
+            }  
+        }  
+    /*  cout<<index<<"："<<endl; 
+        for(i=-1;++i<sum-1;){ 
+            cout<<dist[i]<<" "; 
+        } 
+        cout<<dist[i]<<endl;*/  
+    }  
+/*  for(j=-1;++j<sum-1;){ 
+        cout<<canput[j]<<" "; 
+    } 
+    cout<<canput[j]<<endl;*/  
+    cout<<dist[1]-1<<endl;  
+    delete[]put;  
+    return 0;  
+}  

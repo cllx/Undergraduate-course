@@ -1,0 +1,117 @@
+/*
+*
+解题思路：
+模拟题，分设四个方向模拟
+走过的地方用数组标记方向
+注意变换规则：尤其到了后半段
+*
+*/
+
+#include<cstdio>  
+#include<string>  
+#include<cstring>  
+using namespace std;  
+  
+int map[505][505];  
+int flag[505][505];  
+int dir[4][2]={{-1,1},{0,1},{1,0},{1,-1}};  
+int main()  
+{  
+    int n;  
+    scanf("%d",&n);  
+    for(int i=1;i<=n;i++)  
+    {  
+        for(int j=1;j<=n;j++)  
+        {  
+            scanf("%d",&map[i][j]);  
+        }  
+    }  
+    flag[1][1]=0;  
+    int i=1;  
+    int j=1;  
+    for(int k=1;k<=n*n;k++)  
+    {  
+        if(k<n*n)  
+        {  
+            printf("%d ",map[i][j]);  
+        }  
+        else  
+        {  
+            printf("%d\n",map[i][j]);  
+            break;  
+        }  
+        if(flag[i][j]==0)  
+        {  
+            int a,b;  
+            a=i+dir[0][0];  
+            b=j+dir[0][1];  
+            flag[a][b]=0;  
+            if(a<1||b>n)  
+            {  
+                a=i+dir[1][0];  
+                b=j+dir[1][1];  
+                flag[a][b]=1;  
+                if(a<1||b>n)  
+                {  
+                    a=i+dir[2][0];  
+                    b=j+dir[2][1];  
+                    flag[a][b]=2;  
+                }  
+            }  
+            i=a;  
+            j=b;  
+        }  
+        else if(flag[i][j]==1)  
+        {  
+            int a,b;  
+            a=i+dir[3][0];  
+            b=j+dir[3][1];  
+            flag[a][b]=3;  
+            if(a>n||b<1)  
+            {  
+                a=i+dir[0][0];  
+                b=j+dir[0][1];  
+                flag[a][b]=0;  
+            }  
+            i=a;  
+            j=b;  
+        }  
+        else if(flag[i][j]==3)  
+        {  
+            int a,b;  
+            a=i+dir[3][0];  
+            b=j+dir[3][1];  
+            flag[a][b]=3;  
+            if(a>n||b<1)  
+            {  
+                a=i+dir[2][0];  
+                b=j+dir[2][1];  
+                flag[a][b]=2;  
+                if(a>n||b<1)  
+                {  
+                    a=i+dir[1][0];  
+                    b=j+dir[1][1];  
+                    flag[a][b]=1;  
+                }  
+            }  
+            i=a;  
+            j=b;  
+        }  
+        else if(flag[i][j]==2)  
+        {  
+            int a,b;  
+            a=i+dir[0][0];  
+            b=j+dir[0][1];  
+            flag[a][b]=0;  
+            if(a<1||b>n)  
+            {  
+                a=i+dir[3][0];  
+                b=j+dir[3][1];  
+                flag[a][b]=3;  
+            }  
+            i=a;  
+            j=b;  
+        }  
+    }  
+    return 0;  
+}

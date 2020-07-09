@@ -1,0 +1,94 @@
+#include <iostream>  
+#include <cstdio>  
+#include <cstdlib>  
+#include <algorithm>  
+#include <queue>  
+#include <stack>  
+#include <map>  
+#include <cstring>  
+#include <climits>  
+#include <cmath>  
+#include <cctype>  
+const int inf = 0x3f3f3f3f;//1061109567  
+typedef long long LL;  
+#define lson l,m,rt<<1  
+#define rson m+1,r,rt<<1|1  
+using namespace std;  
+char a[110],b[110],c[110];  
+bool judge1()  
+{  
+    int len1 = strlen(a);  
+    int len2 = strlen(b);  
+    for(int i=0; i<len2; i++)  
+    {  
+        if(b[i] == a[0])  
+        {  
+            int k = i + 1;  
+            int j;  
+            for(j=1; j<len1; j++)  
+            {  
+                if(b[k] == a[j])  
+                    k++;  
+                else  
+                    break;  
+            }  
+            if(j == len1)  
+                return true;  
+        }  
+    }  
+    return false;  
+}  
+bool judge2()  
+{  
+    int len1 = strlen(a);  
+    int len2 = strlen(b);  
+    for(int i=0; i<len1; i++)  
+    {  
+        if(a[i] >= 'A' && a[i] <= 'Z')  
+            a[i] = a[i]-'A'+'a';  
+        else  
+            a[i] = a[i];  
+    }  
+    for(int i=0; i<len2; i++)  
+    {  
+        if(b[i] >= 'A' && b[i] <= 'Z')  
+            c[i] = b[i]-'A'+'a';  
+        else  
+            c[i] = b[i];  
+    }  
+    //c[len2] = '\0';这个加和不加是一个效果  
+    for(int i=0; i<len2; i++)  
+    {  
+        if(c[i] == a[0])  
+        {  
+            int k = i + 1;  
+            int j;  
+            for(j=1; j<len1; j++)  
+            {  
+                if(c[k] == a[j])  
+                    k++;  
+                else  
+                    break;  
+            }  
+            if(j == len1)  
+                return true;  
+        }  
+    }  
+    return false;  
+}  
+int main()  
+{  
+    int flag,n;  
+    scanf("%s",a);  
+    scanf("%d",&flag);  
+    scanf("%d",&n);  
+    while(n--)  
+    {  
+        scanf("%s",b);  
+        if(flag == 1 && judge1())  
+            printf("%s\n",b);  
+        else if(flag == 0 && judge2())  
+            printf("%s\n",b);  
+    }  
+    return 0;  
+}  

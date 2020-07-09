@@ -1,0 +1,99 @@
+/*
+*
+*分析这类题，首先要找出扫描的规律，从题目中可以发现，扫描是成Z字形的。那么也就是说对于扫描输出有四种状态，每次输出要判定下一次的行走路线，走一步就输出一个。
+
+四种状态为{right,leftDown,down,rightUp}。
+开始我还怀疑，Z字形扫描矩阵是否能够遍历矩阵所有的元素。下面我们来分析一下：
+1、前提是这个矩阵是一个n维方阵，假设为Anxn.
+2、从输出当前的元素A[i][j]，并根据当前的状态来判断下一步的扫描状态。该如何判断呢？可以发现每次在执行完当前状态后，行号i或者列号j都有可能发生改变，那么就可以结合当前状态和行，列号的取值来判定下一步的行走路线。
+从上图中我们可以发现：
+right状态始终在首行或者尾行上执行，并且执行right状态后列号j会增加1，即j = j+1。所以我们可以根据当前状态的下一步状态有两种：
+当i == 0时，state = leftDown;
+当i == n-1时，state = rightUp。
+执行完leftDown状态后，i = i+1,j = j-1，其下一步状态有三种：
+当 j == 0 && i != n-1时，state = down;
+当 row == n-1时，state = right;
+其它情况，state = leftDown（自身状态）。
+对于rightUp和down状态，其分析方法和上面两种类似，就不再做分析。
+综合上面分析来看，状态每次要发生改变的话，行号或者列号必须处于临界状态，即它们的取值为{0,n-1}。
+*
+*
+*/
+
+
+
+
+
+#include <iostream>
+
+using namespace std;
+
+int A[501][501];
+enum  Choice
+{
+    rightTowards,//向移动
+    rightUp,//向右上移动
+    down,//向下移动
+    leftDown//向左下移动
+};
+
+void zigzagScan(int n)
+{
+    for (int i = 0; i < n; ++i)
+    for (int j = 0; j < n; ++j)
+        cin >> A[i][j];
+    int row = 0, col = 0;
+    Choice choice = rightTowards;
+    //row = n-1&&col = n-1的情况在while循环结束后处理，防止出现越界的情况
+    while (row != n - 1 || col != n - 1)
+    {
+        cout << A[row][col] << ' ';
+        switch (choice)
+        {
+        case rightTowards:
+            col++;
+            if (row == 0)
+                choice = leftDown;
+            else
+                choice = rightUp;
+            break;
+        case rightUp:
+            row--;
+            col++;
+            if (row == 0 && col != n - 1)
+                choice = rightTowards;
+            else if (col == n - 1)
+                choice = down;
+            else
+                choice = rightUp;
+            break;
+        case down:
+            row++;
+            if (col == 0)
+                choice = rightUp;
+            else
+                choice = leftDown;
+            break;
+        case leftDown:
+            row++;
+            col--;
+            if (col == 0 && row != n - 1)
+                choice = down;
+            else if (row == n - 1)
+                choice = rightTowards;
+            else
+                choice = leftDown;
+            break;
+        }
+    }
+    cout << A[n - 1][n - 1];
+}
+
+void main(void)
+{
+    int n;
+    while (cin >> n)
+    {
+        zigzagScan(n);
+    }
+}

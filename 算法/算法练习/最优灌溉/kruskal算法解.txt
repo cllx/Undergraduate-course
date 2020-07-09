@@ -1,0 +1,58 @@
+//201412-4
+//最优灌溉  Kruskal
+#include<cstdio>
+#include<cmath>
+#include<cstring>
+#include<algorithm>
+#include<iostream>
+#include<stack>
+using namespace std;
+struct line{
+    int a,b,v;
+};
+line l[100005];
+int f[1005];
+bool cmp(line a,line b){//升序排列
+    return a.v<b.v;
+}
+int find(int a){
+    if(f[a]!=a){
+        f[a]=find(f[a]);
+    }
+    return f[a];
+}
+int main(){
+    //freopen("D:\\INPUT.txt","r", stdin);
+    int n,m;
+    while(scanf("%d %d",&n,&m)!=EOF){
+        int i=0;
+        for(;i<m;i++){
+            scanf("%d %d %d",&l[i].a,&l[i].b,&l[i].v);
+        }
+        for(i=0;i<=n;i++){
+            f[i]=i;
+        }
+        sort(l,l+m,cmp);
+        /*for(i=0;i<=m;i++){
+            cout<<i<<" "<<l[i].v<<endl;
+        }*/
+        int sum=0;
+        i=0;
+        n--;
+        while(n&&i<m){//点的数量可能比线段的数量更多
+            int a=l[i].a;
+            int b=l[i].b;
+            a=find(a);
+            b=find(b);
+            if(a!=b){
+                //cout<<i<<endl;
+                f[a]=b;
+                sum+=l[i].v;
+                n--;
+            }
+            i++;
+        }
+        cout<<sum<<endl;
+    }
+    return 0;
+}

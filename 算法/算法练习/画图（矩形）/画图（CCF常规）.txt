@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+struct rec
+{
+ int x1;
+ int x2;
+ int y1;
+ int y2;
+}a[100];
+int main()
+{
+ int n,i,j,k,x1,x2,y1,y2,f[100][100]={0};
+ int s=0;
+ cin>>n;
+ for(i=0;i<n;i++)
+ {
+   cin>>a[i].x1>>a[i].y1>>a[i].x2>>a[i].y2;
+   for(j=a[i].x1;j<a[i].x2;j++)
+    for(k=a[i].y1;k<a[i].y2;k++)
+     f[j][k]=1;
+ }
+ for(i=0;i<100;i++)
+  for(j=0;j<100;j++)
+  {
+   if(f[i][j]==1) s++;
+  }
+ cout<<s<<endl;
+ return 0;
+}

@@ -1,0 +1,54 @@
+求解思路：本题方法比较简单，有切问题规模也不是很大，所以相对于来说比较容易。
+如果能看出来其输出规则的规律还是很容易求解的。我的思路就是暴力求解，
+其输出规则为数组下标之和一次增大，每次输出一次调换一次方向。
+有了这个规律之后就是设计程序了。具体设计方法因人而异，上代码如上。
+
+
+
+
+
+
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    int n,flag=1,t=2;
+    cin>>n;
+    int a[n+1][n+1];
+    for(int i=1;i<=n;i++)
+    {
+        for(int j=1;j<=n;j++)
+        {
+            cin>>a[i][j];
+        }
+    }
+    while(t==2)
+    {
+        cout<<a[1][1]<<" ";
+        t++;
+    }
+    for(t;t<=2*n;t++)
+    {
+        if(flag==1)
+        {
+            for(int i=1;i<t;i++)
+            {
+                if(i<=n&&t-i<=n)
+                    cout<<a[i][t-i]<<" ";
+            }
+            flag=0;
+        }
+        else if(flag==0)
+        {
+            for(int i=1;i<t;i++)
+            {
+                if(i<=n&&t-i<=n)
+                    cout<<a[t-i][i]<<" ";
+            }
+            flag=1;
+        }
+    }
+    
+    return 0;    
+}
