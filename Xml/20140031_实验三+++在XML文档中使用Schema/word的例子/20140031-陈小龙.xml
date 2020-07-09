@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<Company xmlns="http://my-company.com/namespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://my-company.com/namespace
+C:\Users\Administrator\Desktop\20140031-陈小龙.xsd">
+	<Address xsi:type="US-Address">
+		<Name>US dependency</Name>
+		<Street>Noble Ave</Street>
+		<City>Dallas</City>
+		<Zip>04812</Zip>
+		<state>Texas</state>
+	</Address>
+	<Person Manager="false" Degree="MA" Programmer="true">
+		<First>Alfred</First>
+		<Last>Aldrich</Last>
+		<PhoneExt>15</PhoneExt>
+		<Email>Aldrich@work.com</Email>
+	</Person>
+	<Person Manager="true" Degree="PhD" Programmer="false">
+		<First>Colin</First>
+		<Last>Coletti</Last>
+		<PhoneExt>111</PhoneExt>
+		<Email>Coletti@woork.com</Email>
+	</Person>
+	<Person Manager="true" Degree="BA" Programmer="false">
+		<First>Fred</First>
+		<Last>Smith</Last>
+		<PhoneExt>20</PhoneExt>
+		<Email>Smith@work.com</Email>
+	</Person>
+</Company>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<xs:schema xmlns="http://my-company.com/namespace" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://my-company.com/namespace" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="article" type="article类型">
+		<xs:annotation>
+			<xs:documentation>root element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="article类型">
+		<xs:sequence>
+			<xs:element ref="HeadLine"/>
+			<xs:element name="ByLine">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Author" maxOccurs="unbounded"/>
+						<xs:element name="title" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="DateLine" type="xs:string"/>
+			<xs:element name="body" type="xs:string"/>
+			<xs:element name="states">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="submitted" type="xs:string"/>
+						<xs:element name="wordcount" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="HeadLine">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MainHead" type="xs:string"/>
+				<xs:element name="SubHead" type="xs:string"/>
+			</xs:sequence>
+			<xs:attribute name="section" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:boolean">
+						<xs:pattern value="business"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="I:\xml20140031仿例\20140031-陈小龙-record.xsd">
+	<recordname>蓝光</recordname>
+	<data>2010-9-20</data>
+	<numsong>10</numsong>
+	<price>50</price>
+	<number 单位="张"/>
+	<customer>
+		<name>张明</name>
+		<address>中国四川省雅安市雨城区新康路46号625000</address>
+		<beizhu>
+			<payway>网上支付</payway>
+			<recorddata>2015-9-01</recorddata>
+		</beizhu>
+	</customer>
+</record>

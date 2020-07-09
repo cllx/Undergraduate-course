@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bookcase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:\Users\Administrator\Desktop\20140031-陈小龙(2).xsd">
+	<book>
+		<b-name/>
+		<author>
+			<name/>
+			<E-mail/>
+		</author>
+		<price/>
+		<publishing-house>
+			<p-name/>
+			<address/>
+			<zipcode/>
+			<E-mail/>
+		</publishing-house>
+	</book>
+</bookcase>

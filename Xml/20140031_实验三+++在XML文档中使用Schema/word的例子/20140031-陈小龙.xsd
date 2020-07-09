@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<xs:schema xmlns="http://my-company.com/namespace" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://my-company.com/namespace" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="Company">
+		<xs:annotation>
+			<xs:documentation>Root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Address" type="Address类型"/>
+				<xs:element ref="Person" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="Address类型">
+		<xs:sequence>
+			<xs:element name="Name" type="xs:string"/>
+			<xs:element name="Street" type="xs:string"/>
+			<xs:element name="City" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="US-Address">
+		<xs:complexContent>
+			<xs:extension base="Address类型">
+				<xs:sequence>
+					<xs:element name="Zip" type="xs:positiveInteger"/>
+					<xs:element name="state" type="US-State"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="US-State">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="UK-Address">
+		<xs:complexContent>
+			<xs:extension base="Address类型">
+				<xs:sequence>
+					<xs:element name="Zip" type="xs:positiveInteger"/>
+					<xs:element name="state" type="UK-Address"/>
+					<xs:element name="Postcode"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="UK-State">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:element name="Person">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="First" type="xs:string"/>
+				<xs:element name="Last" type="xs:string"/>
+				<xs:element name="Title" type="xs:string" minOccurs="0"/>
+				<xs:element name="PhoneExt">
+					<xs:simpleType>
+						<xs:restriction base="xs:integer">
+							<xs:maxInclusive value="999"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Email" type="xs:string"/>
+			</xs:all>
+			<xs:attribute name="Manager" type="xs:boolean" use="required"/>
+			<xs:attribute name="Programmer" type="xs:boolean" use="optional"/>
+			<xs:attribute name="Degree">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="BA"/>
+						<xs:enumeration value="MA"/>
+						<xs:enumeration value="PhD"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

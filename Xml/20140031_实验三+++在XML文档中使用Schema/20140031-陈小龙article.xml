@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<article xmlns="http://my-company.com/namespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://my-company.com/namespace
+I:\xml20140031仿例\20140031-陈小龙article.xsd">
+	<HeadLine section="business">
+		<MainHead> Main headline goes here </MainHead>
+		<SubHead>A subheadline goes here </SubHead>
+	</HeadLine>
+	<ByLine>
+		<Author/>
+		<title/>
+	</ByLine>
+	<DateLine>April 30,2011 </DateLine>
+	<body>content of story goes here</body>
+	<states>
+		<submitted> 2011-06-09</submitted>
+		<wordcount>2005</wordcount>
+	</states>
+</article>
