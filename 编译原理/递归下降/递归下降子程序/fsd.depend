@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1427975697 source:d:\ctest\递归下降子程序\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1463569980 source:e:\c\编译原理\递归下降\递归下降子程序\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
